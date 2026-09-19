@@ -16,13 +16,16 @@
   --ink-dim:  #8C9A98;
   --ink-mute: #7E8C89;
 
-  /* Hilos TIA-598-C, posiciones 1 a 6 */
-  --h1: #1477D1;  /* azul    */
-  --h2: #FF7A1A;  /* naranja */
-  --h3: #0FA95E;  /* verde   */
-  --h4: #A9713F;  /* café    */
-  --h5: #7D919E;  /* gris    */
-  --h6: #E2E6E4;  /* blanco  */
+  /* Hilos TIA-598-C, posiciones 1 a 9 */
+  --h1: #1477D1;  /* azul     */
+  --h2: #FF7A1A;  /* naranja  */
+  --h3: #0FA95E;  /* verde    */
+  --h4: #A9713F;  /* café     */
+  --h5: #7D919E;  /* gris     */
+  --h6: #E2E6E4;  /* blanco   */
+  --h7: #E23D3D;  /* rojo     */
+  --h8: #4A5658;  /* negro, en grafito */
+  --h9: #E8C547;  /* amarillo */
 
   /* Hilo activo: lo reescribe cada sección de proyecto */
   --hilo: var(--h1);
@@ -278,7 +281,7 @@ a { color: inherit; }
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.1em;
-  color: var(--hilo);
+  color: var(--tinta, var(--hilo));
 }
 
 .hilo-fila__texto { flex: 1; min-width: 0; }
@@ -312,7 +315,7 @@ a { color: inherit; }
   font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--hilo);
+  color: var(--tinta, var(--hilo));
 }
 
 .hilo-fila__vivo::before {
@@ -320,7 +323,7 @@ a { color: inherit; }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--hilo);
+  background: var(--tinta, var(--hilo));
 }
 
 /* Atenuar el resto de hilos al señalar uno */
@@ -350,7 +353,7 @@ a { color: inherit; }
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--hilo);
+  color: var(--tinta, var(--hilo));
 }
 
 .proyecto__marca::after {
@@ -403,15 +406,15 @@ a { color: inherit; }
 
 .enlace:hover { color: var(--ink); border-bottom-color: var(--ink-mute); }
 
-.enlace--vivo { color: var(--hilo); border-bottom-color: color-mix(in srgb, var(--hilo) 45%, transparent); }
-.enlace--vivo:hover { color: var(--hilo); border-bottom-color: var(--hilo); }
+.enlace--vivo { color: var(--tinta, var(--hilo)); border-bottom-color: color-mix(in srgb, var(--hilo) 45%, transparent); }
+.enlace--vivo:hover { color: var(--tinta, var(--hilo)); border-bottom-color: var(--hilo); }
 
 .enlace--vivo::before {
   content: "";
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--hilo);
+  background: var(--tinta, var(--hilo));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--hilo) 20%, transparent);
 }
 
@@ -424,6 +427,13 @@ a { color: inherit; }
 }
 
 .capturas--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Más de dos: rejilla de dos, con la primera captura a todo lo ancho */
+.capturas--muchas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.capturas--muchas .captura:first-child { grid-column: 1 / -1; }
+
+/* Capturas de teléfono: caben cuatro por fila */
+.capturas--vertical { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 .captura {
   margin: 0;
@@ -513,49 +523,6 @@ a { color: inherit; }
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   color: var(--ink-dim);
-}
-
-/* ── Archivo ────────────────────────────────────────────── */
-
-.archivo {
-  border-top: 1px solid var(--linea);
-  max-width: var(--ancho);
-  margin: 0 auto;
-  padding: clamp(4rem, 10vw, 7rem) var(--marco);
-}
-
-.archivo__lista {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--linea);
-}
-
-.archivo__lista li {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.95rem 1.2rem 0.95rem 0;
-  border-bottom: 1px solid var(--linea);
-}
-
-.archivo__lista a {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  text-decoration: none;
-  overflow-wrap: anywhere;
-  color: var(--ink);
-  transition: color 0.2s;
-}
-
-.archivo__lista a:hover { color: var(--h2); }
-
-.archivo__lista span {
-  font-size: 0.9rem;
-  color: var(--ink-mute);
 }
 
 /* ── Oficio ─────────────────────────────────────────────── */
@@ -704,7 +671,10 @@ a { color: inherit; }
 @media (max-width: 860px) {
   .proyecto__cuerpo,
   .oficio__cuerpo,
-  .capturas--2 { grid-template-columns: 1fr; }
+  .capturas--2,
+  .capturas--muchas { grid-template-columns: 1fr; }
+
+  .capturas--vertical { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   .barra__nav { display: none; }
 
@@ -731,7 +701,7 @@ a { color: inherit; }
 
 /* Enlace dentro de una ficha de proyecto */
 .ficha dd a {
-  color: var(--hilo);
+  color: var(--tinta, var(--hilo));
   text-decoration: none;
   border-bottom: 1px solid color-mix(in srgb, var(--hilo) 45%, transparent);
   padding-bottom: 1px;

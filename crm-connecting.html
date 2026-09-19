@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRM Connecting — Caso completo · Daniel Ernesto Pérez Martínez</title>
+<meta name="description" content="Un año en producción, una reescritura completa y un servidor propio: la historia del CRM con el que un call center de telecomunicaciones registra ventas y reparte comisiones.">
+<meta name="author" content="Daniel Ernesto Pérez Martínez">
+<meta property="og:title" content="CRM Connecting — Caso completo">
+<meta property="og:description" content="Un año en producción, una reescritura completa de Node a FastAPI y una mudanza a infraestructura propia, hechos por una sola persona.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B1012'/><g stroke-width='3' fill='none'><path d='M2 16h28' stroke='%231477D1'/><path d='M2 8h28' stroke='%23FF7A1A'/><path d='M2 24h28' stroke='%230FA95E'/></g></svg>">
+<style>
+  /* ── Página de caso: una sola columna de lectura ─────────── */
+  .caso { --hilo: var(--h1); max-width: 940px; margin: 0 auto; padding: 0 var(--marco); }
+
+  .caso__portada { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 4vw, 3rem); }
+
+  .caso__titulo {
+    margin: 0;
+    font-family: var(--display);
+    font-variation-settings: "wdth" 118, "wght" 750;
+    font-size: clamp(2.4rem, 7vw, 4.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  .caso__entrada {
+    max-width: 62ch;
+    margin: clamp(1.6rem, 3vw, 2.4rem) 0 0;
+    font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+    font-weight: 300;
+    color: var(--ink-dim);
+  }
+
+  .caso__bloque { padding: clamp(2.5rem, 6vw, 4.5rem) 0; border-top: 1px solid var(--linea); }
+
+  .caso__bloque > h2 {
+    margin: 0 0 1.8rem;
+    font-family: var(--display);
+    font-variation-settings: "wdth" 112, "wght" 650;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    line-height: 1.1;
+  }
+
+  .caso__bloque h3 {
+    margin: 2.4rem 0 0.6rem;
+    font-family: var(--display);
+    font-variation-settings: "wdth" 105, "wght" 600;
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  }
+
+  .caso p { max-width: 68ch; }
+
+  .caso__bloque p { color: var(--ink-dim); }
+
+  .caso__bloque strong { color: var(--ink); font-weight: 500; }
+
+  /* Línea de tiempo */
+  .hitos { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--linea); }
+
+  .hitos li {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 1.2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--linea);
+    color: var(--ink-dim);
+  }
+
+  .hitos time {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hilo);
+  }
+
+  /* Tablas de cifras */
+  .tabla { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.95rem; }
+
+  .tabla th,
+  .tabla td { padding: 0.7rem 0.9rem 0.7rem 0; text-align: left; border-bottom: 1px solid var(--linea); }
+
+  .tabla th {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .tabla td { color: var(--ink-dim); }
+
+  .tabla .num { text-align: right; font-family: var(--mono); font-size: 0.85rem; color: var(--ink); }
+
+  .tabla tfoot td { color: var(--ink); font-weight: 500; }
+
+  .barra-dato {
+    display: block;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--hilo);
+    opacity: 0.85;
+  }
+
+  .enlace-nota {
+    align-self: center;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mute);
+  }
+
+  .caso__cierre { padding: clamp(3rem, 7vw, 5rem) 0 clamp(4rem, 9vw, 7rem); border-top: 1px solid var(--linea); }
+
+  @media (max-width: 720px) {
+    .hitos li { grid-template-columns: 1fr; gap: 0.35rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <span class="barra__id">D.E.P.M.</span>
+  <nav class="barra__nav">
+    <a href="index.html">← Portafolio</a>
+    <a href="index.html#contacto">Contacto</a>
+  </nav>
+  <span class="barra__estado"><i class="punto"></i>Disponible</span>
+</header>
+
+<main class="caso">
+
+  <article>
+
+    <div class="caso__portada">
+      <p class="eyebrow">Caso · Hilo 01 · azul</p>
+      <h1 class="caso__titulo">CRM Connecting</h1>
+      <p class="caso__entrada">
+        El sistema con el que un call center de telecomunicaciones registra cada venta,
+        reparte las comisiones y mide a sus agentes. Lleva más de un año en producción,
+        se reescribió entero por dentro sin parar la operación y hoy corre en
+        infraestructura propia. Lo hice solo, de punta a punta: producto, backend,
+        frontend y servidor.
+      </p>
+      <div class="proyecto__enlaces">
+        <a class="enlace enlace--vivo" href="https://connecting.lat" target="_blank" rel="noopener">connecting.lat</a>
+        <span class="enlace-nota mono">Código privado: es del cliente</span>
+      </div>
+    </div>
+
+    <section class="caso__bloque">
+      <h2>El problema</h2>
+      <p>
+        Un piso de ventas de telecomunicaciones vive de dos cosas: cerrar ventas y
+        pagar bien las comisiones. Cuando eso se lleva en hojas de cálculo, el
+        supervisor no sabe en qué va el mes hasta que alguien consolida los archivos,
+        las comisiones se discuten de memoria y nadie puede decir quién cambió qué.
+      </p>
+      <p>
+        El encargo fue sustituir esas hojas por un sistema donde el agente capture la
+        venta una sola vez y todo lo demás —validación, facturación, comisión, puntaje,
+        ranking— salga de ahí, en el momento y para todos.
+      </p>
+    </section>
+
+    <section class="caso__bloque">
+      <h2>Línea de tiempo</h2>
+      <ul class="hitos">
+        <li>
+          <time>26 de agosto de 2025</time>
+          <span>Primera cuenta de usuario en la base de datos. El sistema ya funcionaba ese día.</span>
+        </li>
+        <li>
+          <time>27 de agosto de 2025</time>
+          <span>Primer registro en el historial: una importación de más de 300 archivos escritos antes, en local y sin control de versiones.</span>
+        </li>
+        <li>
+          <time>3 de septiembre de 2025</time>
+          <span><strong>Primera venta registrada.</strong> Es la fecha en que el sistema entra en producción.</span>
+        </li>
+        <li>
+          <time>Sep. – nov. de 2025</time>
+          <span>Nacen los módulos que se usan a diario: ranking de agentes, facturación y estadísticas con mapa de Estados Unidos.</span>
+        </li>
+        <li>
+          <time>21 de abril de 2026</time>
+          <span>Limpieza general: 4 474 líneas de código muerto fuera, incluidos 29 scripts sueltos de arreglos de codificación.</span>
+        </li>
+        <li>
+          <time>18 de mayo de 2026</time>
+          <span><strong>Reescritura completa a FastAPI y MySQL</strong>, en un día. La historia de git empieza de cero aquí.</span>
+        </li>
+        <li>
+          <time>18 de agosto de 2026</time>
+          <span>Auditoría de seguridad y remediación.</span>
+        </li>
+        <li>
+          <time>26 de agosto de 2026</time>
+          <span>Mudanza a infraestructura propia en AWS: EC2 con nginx y systemd, base de datos en RDS, respaldos a S3.</span>
+        </li>
+        <li>
+          <time>16 de septiembre de 2026</time>
+          <span>Entorno local con MySQL en Docker y datos anonimizados: se desarrolla sin tocar producción.</span>
+        </li>
+        <li>
+          <time>18 de septiembre de 2026</time>
+          <span>Despliegue automático: el servidor mira <span class="mono">main</span> cada minuto y aplica los cambios con punto de retorno y vuelta atrás.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="caso__bloque">
+      <h2>Las dos etapas</h2>
+      <p>
+        <strong>Primera etapa (agosto de 2025 – abril de 2026).</strong> Node con
+        Express 5, MongoDB con Mongoose, JWT, bcrypt, Cloudinary para las imágenes y
+        Chart.js, desplegado en Render. Nueve meses y 646 commits, con el pico en
+        noviembre de 2025. Ahí se construyó el producto: lo que el negocio necesitaba
+        quedó claro trabajando con él, no en un documento previo.
+      </p>
+      <p>
+        <strong>Segunda etapa (desde mayo de 2026).</strong> El 18 de mayo reescribí el
+        sistema a FastAPI con MySQL y SQLAlchemy asíncrono: backend, capa de datos y
+        salida de MongoDB, todo en un día, sin que el piso de ventas dejara de
+        registrar. Desde entonces van 256 commits. Sumando las dos etapas, 902.
+      </p>
+
+      <figure class="captura" style="margin: 2.5rem 0 0;">
+        <img src="img/crm-tablero.webp" alt="CRM Connecting: tablero con ventas del año, mapa de instalaciones, ranking y llamadas pendientes" loading="lazy" decoding="async">
+        <figcaption class="captura__pie">El tablero: ventas del año, instalaciones en el mapa, ranking del mes y llamadas pendientes. Los datos de clientes y agentes van difuminados.</figcaption>
+      </figure>
+    </section>
+
+    <section class="caso__bloque">
+      <h2>Decisiones y por qué</h2>
+
+      <h3>Reescribir en lugar de remendar</h3>
+      <p>
+        MongoDB servía para arrancar, pero el negocio del CRM es relacional: ventas que
+        pertenecen a agentes, que pertenecen a equipos, con comisiones que se calculan
+        cruzando todo eso. Cada consulta nueva costaba más que la anterior. MySQL con
+        SQLAlchemy dejó el cálculo donde debe estar, y de paso dio algo que importa
+        cuando el sistema es de un cliente: una base estándar, fácil de respaldar,
+        consultar y entregar a otro si algún día hace falta.
+      </p>
+
+      <h3>Frontend sin framework</h3>
+      <p>
+        44 páginas de HTML, CSS y JavaScript servidas por el mismo backend. Sin paso de
+        compilación y con Chart.js servido desde el propio servidor, no desde un CDN.
+        La razón es de mantenimiento, no de gusto: este sistema tiene que poder tocarse
+        dentro de cinco años sin depender de la moda de este año ni de que un paquete
+        siga existiendo.
+      </p>
+
+      <h3>Permisos deducidos, no marcados a mano</h3>
+      <p>
+        Dentro conviven dos negocios que no comparten un solo dato: Residencial y
+        Líneas. La pertenencia no se elige en un formulario, se deduce del equipo y del
+        rol de quien entra, y ese cálculo vive en un único lugar del código. Si
+        estuviera repetido en cada pantalla, tarde o temprano una de ellas se lo
+        saltaría.
+      </p>
+
+      <h3>Infraestructura propia</h3>
+      <p>
+        El sistema pasó por Render, por una prueba con otro proveedor y por una base de
+        datos alquilada en Aiven antes de terminar en AWS. La mudanza final no fue por
+        precio: fue por control. La base de datos quedó en red privada y sin salida a
+        internet, los respaldos son diarios y automáticos, y el servicio lo levanta el
+        sistema operativo, no una persona conectándose a mano.
+      </p>
+
+      <h3>Tiempo real con lo más simple que funcione</h3>
+      <p>
+        El tablero se actualiza solo con Server-Sent Events y un broker pub/sub en
+        memoria. Los avisos van del servidor al navegador y nada más: no hacía falta
+        una conexión bidireccional ni un servicio aparte para eso.
+      </p>
+    </section>
+
+    <section class="caso__bloque">
+      <h2>Seguridad y operación</h2>
+      <p>
+        En agosto de 2026 audité el sistema y cerré lo que encontré: política de
+        contenido, límite de intentos de login, revocación de sesiones y cierre de los
+        endpoints que respondían sin autenticar. La parte más incómoda del hallazgo no
+        estaba en el código de la aplicación sino en la configuración: un proxy mal
+        puesto desarma un límite de intentos sin que nadie se entere.
+      </p>
+      <p>
+        Hoy el despliegue no lo hago a mano. El servidor revisa la rama principal cada
+        minuto, aplica los cambios y guarda un punto de retorno; si algo falla, vuelve
+        atrás solo. Y para desarrollar hay una copia local con datos anonimizados, para
+        no tocar nunca la base real.
+      </p>
+    </section>
+
+    <section class="caso__bloque">
+      <h2>El sistema en cifras</h2>
+      <table class="tabla">
+        <thead>
+          <tr><th>Lenguaje</th><th class="num">Archivos</th><th class="num">Líneas</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>HTML — pantallas</td><td class="num">44</td><td class="num">29 562</td></tr>
+          <tr><td>CSS — diseño</td><td class="num">56</td><td class="num">17 829</td></tr>
+          <tr><td>JavaScript — comportamiento</td><td class="num">57</td><td class="num">17 187</td></tr>
+          <tr><td>Python — motor</td><td class="num">65</td><td class="num">16 399</td></tr>
+          <tr><td>SQL y scripts</td><td class="num">10</td><td class="num">1 437</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td>Total</td><td class="num">232</td><td class="num">≈ 82 000</td></tr>
+        </tfoot>
+      </table>
+      <p style="margin-top: 1.6rem;">
+        Unos 12 MB de código versionado y 902 commits entre las dos etapas, repartidos
+        en 33 routers de backend y unas 25 secciones de menú.
+      </p>
+    </section>
+
+    <section class="caso__bloque">
+      <h2>El problema abierto: el almacenamiento</h2>
+      <p>
+        La base de datos crece a un ritmo que no corresponde al del negocio. Lo
+        comprobé midiendo las copias de seguridad diarias durante cincuenta días: el
+        peso sube de forma sostenida, pero no lo empujan las ventas —todos los
+        registros de clientes juntos son una parte mínima del total—, sino los archivos
+        que se adjuntan a las notas, guardados dentro de la propia base, y el historial
+        del chat interno.
+      </p>
+      <p>
+        La solución no es misteriosa: sacar los adjuntos a almacenamiento de objetos y
+        dejar en la base solo el enlace, y fijar cuánto tiempo se conservan los
+        mensajes. Lo dejo escrito aquí porque la parte que me interesa del oficio no es
+        que un sistema no tenga deudas, sino que su autor sepa cuál es, la haya medido
+        y sepa qué hacer con ella.
+      </p>
+    </section>
+
+    <section class="caso__cierre">
+      <p class="eyebrow">Cómo trabajo</p>
+      <p style="font-size: clamp(1.05rem, 1.7vw, 1.3rem); font-weight: 300; max-width: 60ch;">
+        Hablo con el dueño del negocio, entiendo cómo se paga una comisión, diseño el
+        esquema, escribo el backend y el frontend, administro el servidor y respondo
+        cuando algo se rompe un domingo. Este caso es de un solo sistema, pero así
+        trabajo en todos.
+      </p>
+      <div class="proyecto__enlaces" style="margin-top: 2rem;">
+        <a class="enlace enlace--vivo" href="index.html">Ver el resto del trabajo</a>
+        <a class="enlace" href="mailto:danielernestoperezmartinez394@gmail.com">Escribirme</a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="pie">
+  <span>Daniel Ernesto Pérez Martínez</span>
+  <span class="mono">Caso actualizado el 19 de septiembre de 2026</span>
+</footer>
+
+</body>
+</html>

@@ -5,30 +5,32 @@ Sitio personal. Una sola página, sin framework y sin paso de compilación: se a
 
 ## Idea del diseño
 
-Los ocho proyectos se presentan como los ocho hilos de una bandeja de empalme de
+Los nueve proyectos en producción se presentan como los nueve hilos de una bandeja de empalme de
 fibra óptica. Cada uno lleva el color que le corresponde en el código
 **TIA-598-C** — el mismo estándar que usa el técnico que instala el internet que
 estos sistemas venden:
 
-| Hilo | Color | Proyecto | Publicado |
+| Hilo | Color | Dominio | Qué es |
 |---|---|---|---|
-| 01 | Azul `#1477D1` | CRM Connecting | — |
-| 02 | Naranja `#FF7A1A` | Centro de pagos | — |
-| 03 | Verde `#0FA95E` | Life Line Call | — |
-| 04 | Café `#A9713F` | Line Life | — |
-| 05 | Gris `#7D919E` | Planes con descuento | — |
-| 06 | Blanco `#E2E6E4` | Internet Residencial | speed-internet.com |
-| 07 | Rojo `#E23D3D` | Líneas móviles | GitHub Pages |
-| 08 | Negro `#4A5658` | B.A. Cleaning Services | — |
+| 01 | Azul `#1477D1` | connecting.lat | CRM Connecting, aplicación web |
+| 02 | Naranja `#FF7A1A` | linea-latina.com | Líneas móviles · Next.js en Amplify |
+| 03 | Verde `#0FA95E` | lineas-moviles.com | Líneas móviles · S3 + CloudFront |
+| 04 | Café `#A9713F` | planeslineasmoviles.com | Líneas móviles · activación con eSIM |
+| 05 | Gris `#7D919E` | tumovilplan.com | Líneas móviles · portabilidad |
+| 06 | Blanco `#E2E6E4` | offers-mobile.com | Tienda de teléfonos |
+| 07 | Rojo `#E23D3D` | speed-internet.com | Internet residencial |
+| 08 | Negro `#4A5658` | internetparatuhogar.com | Internet y TV residencial |
+| 09 | Amarillo `#E8C547` | asistenteinternet.com | Cambio de proveedor de internet |
 
 La numeración no es decorativa: los hilos de un cable de fibra van numerados en
 ese orden exacto. El hilo 08 es negro en el estándar; aquí va en grafito para que
-se vea sobre una bandeja oscura.
+se vea sobre una bandeja oscura. Si se quita un proyecto, los que siguen suben de
+posición y toman el color que les toca en la nueva.
 
 ## Estructura
 
 ```
-index.html          Marcado y contenido fijo (portada, oficio, archivo, contacto)
+index.html          Marcado y contenido fijo (portada, oficio, contacto)
 css/estilos.css     Tokens de color y tipografía, y todo el estilo
 js/hilos.js         Datos de los proyectos + dibujo SVG de los hilos
 img/*.webp          Capturas de cada proyecto
@@ -37,19 +39,18 @@ img/*.webp          Capturas de cada proyecto
 
 **Para cambiar un proyecto**, edita el arreglo `HILOS` al principio de
 [`js/hilos.js`](js/hilos.js). De ahí salen las filas de la bandeja, las secciones
-de detalle, las capturas y los enlaces: no hay que tocar el HTML. El arreglo
-`ARCHIVO`, debajo, alimenta la lista de versiones anteriores.
+de detalle, las capturas y los enlaces: no hay que tocar el HTML.
 
-Para añadir un noveno proyecto, el siguiente color del estándar es amarillo
-`#E8C547`; luego violeta, rosa y aqua.
+Para añadir un décimo proyecto, el siguiente color del estándar es violeta;
+luego rosa y aqua.
 
 ## Capturas
 
-Se tomaron con Chrome en modo headless a 1440 px de ancho y se convirtieron a
-WebP (1500 px, calidad 82). Pesan 581 KB entre las diez.
-
-Las del centro de pagos se generaron renderizando las plantillas Jinja con datos
-de ejemplo: **no aparece ningún dato de cliente real**.
+Las del CRM y las de linea-latina.com son del sistema y del sitio en uso, tomadas
+por su autor. En las del CRM van difuminados los datos de clientes y agentes:
+nombres, teléfonos, direcciones, números de cuenta y fotos de perfil. Las demás
+páginas de captación se capturaron de los sitios en vivo con Chrome en modo
+headless a 1440 × 900. Todas son WebP de calidad 82 y pesan 906 KB entre las 21.
 
 ## Tipografías
 

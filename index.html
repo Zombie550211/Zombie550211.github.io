@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daniel Ernesto Pérez Martínez — Desarrollador full-stack</title>
-<meta name="description" content="Desarrollador full-stack. Construyo los sistemas que usan los call centers de telecomunicaciones: CRM en tiempo real, cobros con Stripe y páginas de captación.">
+<meta name="description" content="Desarrollador full-stack. Construyo los sistemas que usan los call centers de telecomunicaciones: un CRM en tiempo real y las páginas de captación que les traen las llamadas.">
 <meta name="author" content="Daniel Ernesto Pérez Martínez">
 <meta property="og:title" content="Daniel Ernesto Pérez Martínez — Desarrollador full-stack">
-<meta property="og:description" content="CRM en tiempo real, plataformas de cobro y páginas de captación para call centers de telecomunicaciones.">
+<meta property="og:description" content="CRM en tiempo real y páginas de captación para call centers de telecomunicaciones.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,6 @@
   <span class="barra__id">D.E.P.M.</span>
   <nav class="barra__nav">
     <a href="#bandeja">Trabajo</a>
-    <a href="#archivo">Archivo</a>
     <a href="#oficio">Oficio</a>
     <a href="#contacto">Contacto</a>
   </nav>
@@ -37,13 +36,13 @@
     <p class="portada__tesis">
       Construyo los sistemas que mantienen vivo un piso de ventas: el CRM donde los
       agentes registran cada venta, el tablero donde el supervisor ve el ranking
-      moverse en vivo, y el enlace por el que el cliente termina pagando.
+      moverse en vivo, y las páginas desde las que el cliente termina llamando.
     </p>
     <dl class="portada__cifras">
-      <div><dt>Sistemas de gestión</dt><dd>2</dd></div>
-      <div><dt>Páginas de captación</dt><dd>6</dd></div>
-      <div><dt>Líneas de Python</dt><dd>19 000</dd></div>
-      <div><dt>Repositorios públicos</dt><dd>20</dd></div>
+      <div><dt>Dominios en producción</dt><dd>9</dd></div>
+      <div><dt>Páginas de captación</dt><dd>8</dd></div>
+      <div><dt>CRM en producción desde</dt><dd>Sep 2025</dd></div>
+      <div><dt>Líneas de código en el CRM</dt><dd>82 000</dd></div>
     </dl>
   </section>
 
@@ -51,7 +50,7 @@
   <section id="bandeja" class="bandeja" aria-labelledby="bandeja-titulo">
     <div class="seccion-cabecera">
       <p class="eyebrow">Índice del trabajo</p>
-      <h2 id="bandeja-titulo" class="seccion-titulo">Ocho hilos</h2>
+      <h2 id="bandeja-titulo" class="seccion-titulo">Nueve hilos</h2>
       <p class="seccion-nota">
         Cada proyecto lleva el color que le toca en el código de fibra óptica
         <span class="mono">TIA&#8209;598</span>, el mismo que usa el técnico que instala
@@ -69,19 +68,6 @@
 
   <!-- ══ Proyectos ══ -->
   <div id="proyectos"></div>
-
-  <!-- ══ Archivo: iteraciones que no tienen sección propia ══ -->
-  <section id="archivo" class="archivo" aria-labelledby="archivo-titulo">
-    <div class="seccion-cabecera">
-      <p class="eyebrow">Lo demás del carrete</p>
-      <h2 id="archivo-titulo" class="seccion-titulo">Archivo</h2>
-      <p class="seccion-nota">
-        Versiones anteriores y variantes de las páginas de arriba. Están públicas
-        porque así se trabajó: una página se rehace tres veces antes de gustar.
-      </p>
-    </div>
-    <ul class="archivo__lista" id="archivo-lista"></ul>
-  </section>
 
   <!-- ══ Oficio ══ -->
   <section id="oficio" class="oficio" aria-labelledby="oficio-titulo">
@@ -113,11 +99,11 @@
         <h3 class="stack__titulo">Herramienta</h3>
         <dl class="stack__lista">
           <div><dt>Backend</dt><dd>Python · FastAPI · SQLAlchemy 2.0 async · Node · Express</dd></div>
-          <div><dt>Datos</dt><dd>MySQL · PostgreSQL · SQLite · Alembic</dd></div>
-          <div><dt>Frontend</dt><dd>HTML · CSS · JavaScript sin framework · Chart.js</dd></div>
+          <div><dt>Datos</dt><dd>MySQL · PostgreSQL · SQLite · MongoDB · Alembic</dd></div>
+          <div><dt>Frontend</dt><dd>HTML · CSS · JavaScript sin framework · Next.js · React · Tailwind · Chart.js</dd></div>
           <div><dt>Tiempo real</dt><dd>Server-Sent Events · broker pub/sub propio</dd></div>
           <div><dt>Pagos y avisos</dt><dd>Stripe · Twilio · SMTP · Cloudinary</dd></div>
-          <div><dt>Infraestructura</dt><dd>AWS EC2 · RDS · S3 · Docker · nginx · Render</dd></div>
+          <div><dt>Infraestructura</dt><dd>AWS EC2 · RDS · S3 · CloudFront · Amplify · Route 53 · CloudFormation · nginx · Docker</dd></div>
           <div><dt>Seguridad</dt><dd>JWT en cookie httpOnly · rate limiting · TLS a la base · auditoría</dd></div>
         </dl>
       </div>
